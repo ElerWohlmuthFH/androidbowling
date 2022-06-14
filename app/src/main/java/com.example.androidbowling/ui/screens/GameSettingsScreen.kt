@@ -21,44 +21,30 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.androidbowling.ui.common.DefaultButton
+import com.example.androidbowling.ui.rooms.PlayerList
+import com.example.androidbowling.ui.rooms.PlayerListViewmodelFactory
+import com.example.androidbowling.ui.rooms.PlayerListViewModel
 import kotlinx.coroutines.launch
 import java.util.*
 
 @Composable
-fun GetScaffold(){
-    val scaffoldState: ScaffoldState = rememberScaffoldState(
-        snackbarHostState = SnackbarHostState()
-    )
-    Scaffold(
-        scaffoldState = scaffoldState,
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "BowlingApp",color= Color.White) },
-                backgroundColor = Color(0xFFFDA433),
-            )
-        },
-        content = { ProfileScreen(scaffoldState) },
-        backgroundColor = Color(0xFFBEEFF5),
-    )
-}
-
-@Composable
-fun ProfileScreen(scaffoldState: ScaffoldState){
+fun GameSettingsScreen(scaffoldState: ScaffoldState) {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    val model : TodoViewModel = viewModel(
-        factory = ToDoViewmodelFactory(
+    val model: PlayerListViewModel = viewModel(
+        factory = PlayerListViewmodelFactory(
             context.applicationContext as Application
         )
     )
-    val list:List<ToDo> = model.todoList.observeAsState(listOf()).value
+    val list: List<PlayerList> = model.playerList.observeAsState(listOf()).value
     var textState = remember { mutableStateOf("") }
     Box(
         modifier = Modifier
             .fillMaxSize()
             .padding(12.dp),
         //contentAlignment = Alignment.Center
-    ){
+    ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
@@ -66,42 +52,43 @@ fun ProfileScreen(scaffoldState: ScaffoldState){
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 4.dp),
-                shape = RoundedCornerShape(8.dp,),
+                shape = RoundedCornerShape(8.dp),
 
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = Color(0xFFFFFFFF),
-                    focusedIndicatorColor =  Color.Transparent, //hide the indicator
+                    focusedIndicatorColor = Color.Transparent, //hide the indicator
                 ),
-                value =textState.value, onValueChange ={textState.value = it}
-                ,placeholder = {
-                    Text(text = "Enter Names")
-                },)
+                value = textState.value, onValueChange = { textState.value = it },
+                placeholder = {
+                    Text(text = "Enter Name")
+                },
+            )
 
             Row(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ){
+            ) {
                 Button(
 
                     onClick = {
                         model.insert(
-                            ToDo(
+                            PlayerList(
                                 null,
                                 UUID.randomUUID().toString(),
                                 textState.value
                             )
                         )
-                        scope.launch{
-                            textState.value= ""
+                        scope.launch {
+                            textState.value = ""
                             scaffoldState.snackbarHostState.showSnackbar(
                                 message = "Notes added",
                             )
                         }
                     }) {
-                    Text(text = "Add Names")
+                    Text(text = "Add Name")
                 }
                 Button(onClick = {
                     model.clear()
-                    scope.launch{
+                    scope.launch {
                         scaffoldState.snackbarHostState.showSnackbar(
                             message = "All Names deleted",
                         )
@@ -111,6 +98,13 @@ fun ProfileScreen(scaffoldState: ScaffoldState){
                     Text(text = "Clear")
                 }
             }
+            Column() {
+                DefaultButton(
+                    text = "Start Game"
+                ) {  }
+            }
+
+
 
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(2.dp)
@@ -149,31 +143,31 @@ fun ProfileScreen(scaffoldState: ScaffoldState){
                             IconButton(onClick = {
                                 list[index].notes = textState.value
                                 model.update(list[index])
-                                scope.launch{
+                                scope.launch {
                                     scaffoldState.snackbarHostState
                                         .showSnackbar(
                                             "Names updated id" +
                                                     " : ${list[index].id}",
                                         )
-                                    textState.value= ""
+                                    textState.value = ""
                                 }
                             }) {
-                                Icon(Icons.Filled.Edit,"",tint = Color.Magenta)
+                                Icon(Icons.Filled.Edit, "", tint = Color.Magenta)
                             }
 
                             IconButton(onClick = {
                                 model.delete(list[index])
-                                scope.launch{
+                                scope.launch {
                                     scaffoldState.snackbarHostState
                                         .showSnackbar(
                                             "Notes deleted id" +
                                                     " : ${list[index].id}",
                                         )
-                                    textState.value= ""
+                                    textState.value = ""
                                 }
 
                             }) {
-                                Icon(Icons.Filled.Delete,"",tint = Color.Red)
+                                Icon(Icons.Filled.Delete, "", tint = Color.Red)
                             }
                         }
                     }
@@ -182,53 +176,3 @@ fun ProfileScreen(scaffoldState: ScaffoldState){
         }
     }
 }
-
-/*
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
-import com.example.androidbowling.ui.theme.SimpleNavComposeAppTheme
-
-@Composable
-fun ProfileScreen(
-    popBackStack: () -> Unit,
-) {
-    Column (
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally) {
-
-        Text("Game Setting", fontSize = 40.sp)
-        Text(text = "Input Player Names:")
-
-        DefaultButton(
-            text = "Start",
-            onClick = popBackStack
-        )
-
-        DefaultButton(
-            text = "Back",
-            onClick = popBackStack
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun DefaultPreview() {
-    SimpleNavComposeAppTheme(useSystemUiController = false) {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.background
-        ) {
-            ProfileScreen {}
-        }
-    }
-}
-
-*/

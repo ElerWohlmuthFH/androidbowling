@@ -9,7 +9,7 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
 import com.example.androidbowling.ui.navigation.BuildNavGraph
-import com.example.androidbowling.ui.theme.SimpleNavComposeAppTheme
+import com.example.androidbowling.ui.theme.AndroidBowlingTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,11 +22,11 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun MainScreen() {
-    SimpleNavComposeAppTheme {
+    AndroidBowlingTheme {
         val navController = rememberNavController()
         val scaffoldState: ScaffoldState = rememberScaffoldState(
             snackbarHostState = SnackbarHostState()
         )
-        BuildNavGraph(navController, scaffoldState)
+        BuildNavGraph(navController)
     }
 }

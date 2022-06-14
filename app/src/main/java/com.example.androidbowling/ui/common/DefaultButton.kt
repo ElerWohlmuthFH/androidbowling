@@ -1,4 +1,4 @@
-package com.example.androidbowling.ui.screens
+package com.example.androidbowling.ui.common
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -18,7 +18,8 @@ fun DefaultButton(
     Spacer(modifier = Modifier.height(5.dp))
     Button(
         onClick = onClick,
-        modifier = Modifier.size(width = 200.dp, height = 70.dp)) {
+        modifier = Modifier.size(width = 200.dp, height = 70.dp)
+    ) {
         Text(text, fontSize = 30.sp)
     }
 }

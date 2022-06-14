@@ -12,11 +12,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.androidbowling.ui.screens.AboutScreen
 import com.example.androidbowling.ui.screens.HomeScreen
-import com.example.androidbowling.ui.screens.ProfileScreen
-import com.example.androidbowling.ui.screens.SearchScreen
+import com.example.androidbowling.ui.screens.GameSettingsScreen
+import com.example.androidbowling.ui.screens.StatisticsScreen
 
 @Composable
-fun BuildNavGraph(navController: NavHostController, scaffoldState: ScaffoldState) {
+fun BuildNavGraph(navController: NavHostController) {
     val scaffoldState: ScaffoldState = rememberScaffoldState(
         snackbarHostState = SnackbarHostState()
     )
@@ -25,8 +25,8 @@ fun BuildNavGraph(navController: NavHostController, scaffoldState: ScaffoldState
         startDestination = NavRoute.Home.path
     ) {
         addHomeScreen(navController, this)
-        addProfileScreen(navController, this,scaffoldState )
-        addSearchScreen(navController, this)
+        addGameSettingsScreen(this, scaffoldState)
+        addStatisticsScreen(navController, this)
         addAboutScreen(navController, this)
     }
 }
@@ -38,16 +38,16 @@ private fun addHomeScreen(
     navGraphBuilder.composable(route = NavRoute.Home.path) {
 
         HomeScreen(
-            navigateToProfile = { id, showDetails ->
+            navigateToGameSettings = { id, showDetails ->
                 navController.navigate(
-                    NavRoute.Profile.withArgs(
+                    NavRoute.GameSettings.withArgs(
                         id.toString(),
                         showDetails.toString()
                     )
                 )
             },
-            navigateToSearch = { query ->
-                navController.navigate(NavRoute.Search.withArgs(query))
+            navigateToStatistics = { query ->
+                navController.navigate(NavRoute.Statistics.withArgs(query))
             },
 
             ) { query ->
@@ -56,45 +56,47 @@ private fun addHomeScreen(
     }
 }
 
-private fun addProfileScreen(
-    navController: NavHostController,
+private fun addGameSettingsScreen(
     navGraphBuilder: NavGraphBuilder,
     scaffoldState: ScaffoldState
 
 ) {
     navGraphBuilder.composable(
-        route = NavRoute.Profile.withArgsFormat(NavRoute.Profile.id, NavRoute.Profile.showDetails),
+        route = NavRoute.GameSettings.withArgsFormat(
+            NavRoute.GameSettings.id,
+            NavRoute.GameSettings.showDetails
+        ),
         arguments = listOf(
-            navArgument(NavRoute.Profile.id) {
+            navArgument(NavRoute.GameSettings.id) {
                 type = NavType.IntType
             },
-            navArgument(NavRoute.Profile.showDetails) {
+            navArgument(NavRoute.GameSettings.showDetails) {
                 type = NavType.BoolType
             }
         )
     ) { navBackStackEntry ->
 
-        val args = navBackStackEntry.arguments
+        navBackStackEntry.arguments
 
-        ProfileScreen(scaffoldState)
+        GameSettingsScreen(scaffoldState)
     }
 }
 
-private fun addSearchScreen(
+private fun addStatisticsScreen(
     navController: NavHostController,
     navGraphBuilder: NavGraphBuilder
 ) {
     navGraphBuilder.composable(
-        route = NavRoute.Search.withArgsFormat(NavRoute.Search.query),
+        route = NavRoute.Statistics.withArgsFormat(NavRoute.Statistics.query),
         arguments = listOf(
-            navArgument(NavRoute.Search.query) {
+            navArgument(NavRoute.Statistics.query) {
                 type = NavType.StringType
                 nullable = true
             }
         )
     ) { navBackStackEntry ->
         navBackStackEntry.arguments
-        SearchScreen { navController.popBackStack() }
+        StatisticsScreen { navController.popBackStack() }
     }
 }
 

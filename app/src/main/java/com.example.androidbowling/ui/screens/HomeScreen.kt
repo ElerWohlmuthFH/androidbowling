@@ -11,12 +11,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.example.androidbowling.ui.theme.SimpleNavComposeAppTheme
+import com.example.androidbowling.ui.common.DefaultButton
+import com.example.androidbowling.ui.theme.AndroidBowlingTheme
 
 @Composable
 fun HomeScreen(
-    navigateToProfile: (Int, Boolean) -> Unit,
-    navigateToSearch: (String) -> Unit,
+    navigateToGameSettings: (Int, Boolean) -> Unit,
+    navigateToStatistics: (String) -> Unit,
     navigateToAbout: (String) -> Unit,
 ) {
 
@@ -27,11 +28,11 @@ fun HomeScreen(
 
         DefaultButton(
             text = "New Game"
-        ) { navigateToProfile(7, true) }
+        ) { navigateToGameSettings(7, true) }
 
         DefaultButton(
             text = "Statistics"
-        ) { navigateToSearch("test") }
+        ) { navigateToStatistics("test") }
 
         DefaultButton(
             text = "About"
@@ -43,14 +44,14 @@ fun HomeScreen(
 @Preview(showBackground = true)
 @Composable
 private fun DefaultPreview() {
-    SimpleNavComposeAppTheme(useSystemUiController = false) {
+    AndroidBowlingTheme(useSystemUiController = false) {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
         ) {
             HomeScreen(
-                navigateToProfile = { _, _ -> },
-                navigateToSearch = {}
+                navigateToGameSettings = { _, _ -> },
+                navigateToStatistics = {}
             ) {}
        }
     }

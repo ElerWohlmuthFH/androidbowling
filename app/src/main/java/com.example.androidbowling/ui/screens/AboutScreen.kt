@@ -11,7 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.androidbowling.ui.theme.SimpleNavComposeAppTheme
+import com.example.androidbowling.ui.common.DefaultButton
+import com.example.androidbowling.ui.theme.AndroidBowlingTheme
 
 @Composable
 fun AboutScreen(
@@ -36,7 +37,7 @@ fun AboutScreen(
 @Preview(showBackground = true)
 @Composable
 private fun DefaultPreview() {
-    SimpleNavComposeAppTheme(useSystemUiController = false) {
+    AndroidBowlingTheme(useSystemUiController = false) {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background

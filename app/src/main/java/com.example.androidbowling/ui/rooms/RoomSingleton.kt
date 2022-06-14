@@ -1,12 +1,13 @@
-package com.example.androidbowling.ui.screens
+package com.example.androidbowling.ui.rooms
+
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import android.content.Context
 
-@Database(entities = [ToDo::class], version = 1, exportSchema = false)
+@Database(entities = [PlayerList::class], version = 1, exportSchema = false)
 abstract class RoomSingleton : RoomDatabase() {
-    abstract fun todoDao(): TodoDAO
+    abstract fun playerListDao(): PlayerListDAO
 
     companion object {
         private var INSTANCE: RoomSingleton? = null
@@ -15,7 +16,8 @@ abstract class RoomSingleton : RoomDatabase() {
                 INSTANCE = Room.databaseBuilder(
                     context,
                     RoomSingleton::class.java,
-                    "roomdb")
+                    "roomdb"
+                )
                     .build()
             }
             return INSTANCE as RoomSingleton
