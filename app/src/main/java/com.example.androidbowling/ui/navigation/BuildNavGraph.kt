@@ -1,5 +1,8 @@
 package com.example.androidbowling.ui.navigation
 
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -13,14 +16,16 @@ import com.example.androidbowling.ui.screens.ProfileScreen
 import com.example.androidbowling.ui.screens.SearchScreen
 
 @Composable
-fun BuildNavGraph(navController: NavHostController) {
-
+fun BuildNavGraph(navController: NavHostController, scaffoldState: ScaffoldState) {
+    val scaffoldState: ScaffoldState = rememberScaffoldState(
+        snackbarHostState = SnackbarHostState()
+    )
     NavHost(
         navController = navController,
         startDestination = NavRoute.Home.path
     ) {
         addHomeScreen(navController, this)
-        addProfileScreen(navController, this)
+        addProfileScreen(navController, this,scaffoldState )
         addSearchScreen(navController, this)
         addAboutScreen(navController, this)
     }
@@ -53,7 +58,9 @@ private fun addHomeScreen(
 
 private fun addProfileScreen(
     navController: NavHostController,
-    navGraphBuilder: NavGraphBuilder
+    navGraphBuilder: NavGraphBuilder,
+    scaffoldState: ScaffoldState
+
 ) {
     navGraphBuilder.composable(
         route = NavRoute.Profile.withArgsFormat(NavRoute.Profile.id, NavRoute.Profile.showDetails),
@@ -69,7 +76,7 @@ private fun addProfileScreen(
 
         val args = navBackStackEntry.arguments
 
-        ProfileScreen { navController.popBackStack() }
+        ProfileScreen(scaffoldState)
     }
 }
 
