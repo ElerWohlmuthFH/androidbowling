@@ -43,7 +43,7 @@ fun GameSettingsScreen(
             context.applicationContext as Application
         )
     )
-    val list: List<PlayerList> = model.playerList.observeAsState(listOf()).value
+    val list: List<PlayerList> = model.playerListList.observeAsState(listOf()).value
     var textState = remember { mutableStateOf("") }
     Box(
         modifier = Modifier
@@ -138,7 +138,7 @@ fun GameSettingsScreen(
                             )
 
                             Text(
-                                text = " : " + list[index].notes,
+                                text = " : " + list[index].names,
                                 style = TextStyle(
                                     color = if (list[index].id!! >= 33)
                                         Color(0xFF3B7A57)
@@ -148,7 +148,7 @@ fun GameSettingsScreen(
                             )
 
                             IconButton(onClick = {
-                                list[index].notes = textState.value
+                                list[index].names = textState.value
                                 model.update(list[index])
                                 scope.launch {
                                     scaffoldState.snackbarHostState

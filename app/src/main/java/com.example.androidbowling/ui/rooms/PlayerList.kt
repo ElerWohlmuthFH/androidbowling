@@ -13,7 +13,7 @@ class PlayerList(
     var fullName: String,
 
     @ColumnInfo(name = "notes")
-    var notes: String
+    var names: String
 ) {
 
 }

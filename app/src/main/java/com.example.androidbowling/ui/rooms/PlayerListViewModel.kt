@@ -10,23 +10,23 @@ import kotlinx.coroutines.launch
 class PlayerListViewModel(application: Application) : ViewModel() {
     private val db = RoomSingleton.getInstance(application)
 
-    internal val playerList: LiveData<MutableList<PlayerList>> = db.playerListDao().getTodos()
+    internal val playerListList: LiveData<MutableList<PlayerList>> = db.playerListDao().getPlayerlists()
 
-    fun insert(todo: PlayerList) {
+    fun insert(playerlist: PlayerList) {
         viewModelScope.launch(Dispatchers.IO) {
-            db.playerListDao().insert(todo)
+            db.playerListDao().insert(playerlist)
         }
     }
 
-    fun update(todo: PlayerList) {
+    fun update(playerlist: PlayerList) {
         viewModelScope.launch(Dispatchers.IO) {
-            db.playerListDao().update(todo)
+            db.playerListDao().update(playerlist)
         }
     }
 
-    fun delete(todo: PlayerList) {
+    fun delete(playerlist: PlayerList) {
         viewModelScope.launch(Dispatchers.IO) {
-            db.playerListDao().delete(todo)
+            db.playerListDao().delete(playerlist)
         }
     }
 

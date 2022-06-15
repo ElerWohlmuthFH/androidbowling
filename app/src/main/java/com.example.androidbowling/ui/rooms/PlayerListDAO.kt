@@ -6,7 +6,7 @@ import androidx.room.*
 @Dao
 interface PlayerListDAO {
     @Query("SELECT * FROM todoTBL ORDER BY id DESC")
-    fun getTodos(): LiveData<MutableList<PlayerList>>
+    fun getPlayerlists(): LiveData<MutableList<PlayerList>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(playerlist: PlayerList)

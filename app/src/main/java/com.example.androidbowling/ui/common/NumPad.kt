@@ -22,14 +22,13 @@ fun NumPad() {
 
 
 //Box(){
-    val width = 0.33f // 10%
+    val width = 0.33f // 33%
     val height = width / 2
 
-//    Box(
-//        modifier = Modifier.height(280.dp).fillMaxWidth(),
-//        contentAlignment = Alignment.BottomCenter
+//Column(){
+//    Column(
+//        Modifier.weight(1f)
 //    ) {
-
         Row() {
             Button(
                 onClick = { writeToTable("1") },
@@ -110,8 +109,8 @@ fun NumPad() {
                 Text("X", fontSize = 30.sp)
             }
         }
-    }
-
+//    }}
+}
 //}
 
 fun writeToTable(string: String) {

@@ -38,8 +38,13 @@ fun GameScreen(
 
         Column(
             modifier = Modifier
+                .weight(1f)
                 .verticalScroll(rememberScrollState())
         ) {
+            Player("Eler")
+            Player("Matthias")
+            Player("Eler")
+            Player("Matthias")
             Player("Eler")
             Player("Matthias")
         }
