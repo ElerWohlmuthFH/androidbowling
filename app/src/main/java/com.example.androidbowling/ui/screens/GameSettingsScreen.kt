@@ -106,8 +106,9 @@ fun GameSettingsScreen(
             }
             Column() {
                 DefaultButton(
-                    text = "Start Game"
-                ) { navigateToGame() }
+                    text = "Start Game",
+                    onClick = navigateToGame
+                )
             }
 
 

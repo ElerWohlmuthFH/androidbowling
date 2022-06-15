@@ -8,10 +8,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.androidbowling.ui.screens.AboutScreen
-import com.example.androidbowling.ui.screens.HomeScreen
-import com.example.androidbowling.ui.screens.GameSettingsScreen
-import com.example.androidbowling.ui.screens.StatisticsScreen
+import com.example.androidbowling.ui.screens.*
 
 @Composable
 fun BuildNavGraph(navController: NavHostController) {
@@ -26,6 +23,7 @@ fun BuildNavGraph(navController: NavHostController) {
         addGameSettingsScreen(navController, this, scaffoldState)
         addStatisticsScreen(this)
         addAboutScreen(this)
+        addGameScreen(this)
     }
 }
 
@@ -85,6 +83,19 @@ private fun addAboutScreen(
         route = NavRoute.About.path
     ) {
         AboutScreen {
+//        popBackStack = { navController.popBackStack() }
+        }
+    }
+}
+
+
+private fun addGameScreen(
+    navGraphBuilder: NavGraphBuilder
+) {
+    navGraphBuilder.composable(
+        route = NavRoute.Game.path
+    ) {
+        GameScreen {
 //        popBackStack = { navController.popBackStack() }
         }
     }
