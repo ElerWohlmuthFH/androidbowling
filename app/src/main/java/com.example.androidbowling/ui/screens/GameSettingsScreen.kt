@@ -29,7 +29,13 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 @Composable
-fun GameSettingsScreen(scaffoldState: ScaffoldState) {
+fun GameSettingsScreen(
+    scaffoldState: ScaffoldState,
+//    function: () -> Unit,
+    navigateToGame: () -> Unit
+) {
+
+
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val model: PlayerListViewModel = viewModel(
@@ -101,7 +107,7 @@ fun GameSettingsScreen(scaffoldState: ScaffoldState) {
             Column() {
                 DefaultButton(
                     text = "Start Game"
-                ) {  }
+                ) { navigateToGame() }
             }
 
 

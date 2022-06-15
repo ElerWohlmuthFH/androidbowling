@@ -6,10 +6,8 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import com.example.androidbowling.ui.screens.AboutScreen
 import com.example.androidbowling.ui.screens.HomeScreen
 import com.example.androidbowling.ui.screens.GameSettingsScreen
@@ -25,9 +23,9 @@ fun BuildNavGraph(navController: NavHostController) {
         startDestination = NavRoute.Home.path
     ) {
         addHomeScreen(navController, this)
-        addGameSettingsScreen(this, scaffoldState)
-        addStatisticsScreen(navController, this)
-        addAboutScreen(navController, this)
+        addGameSettingsScreen(navController, this, scaffoldState)
+        addStatisticsScreen(this)
+        addAboutScreen(this)
     }
 }
 
@@ -36,84 +34,58 @@ private fun addHomeScreen(
     navGraphBuilder: NavGraphBuilder
 ) {
     navGraphBuilder.composable(route = NavRoute.Home.path) {
-
         HomeScreen(
-            navigateToGameSettings = { id, showDetails ->
-                navController.navigate(
-                    NavRoute.GameSettings.withArgs(
-                        id.toString(),
-                        showDetails.toString()
-                    )
-                )
+            navigateToAbout = {
+                navController.navigate(NavRoute.About.path)
             },
-            navigateToStatistics = { query ->
-                navController.navigate(NavRoute.Statistics.withArgs(query))
+            navigateToStatistics = {
+                navController.navigate(NavRoute.Statistics.path)
             },
-
-            ) { query ->
-            navController.navigate(NavRoute.About.withArgs(query))
-        }
+            navigateToGameSettings = {
+                navController.navigate(NavRoute.GameSettings.path)
+            }
+        )
     }
 }
 
 private fun addGameSettingsScreen(
+    navController: NavHostController,
     navGraphBuilder: NavGraphBuilder,
     scaffoldState: ScaffoldState
 
 ) {
+
     navGraphBuilder.composable(
-        route = NavRoute.GameSettings.withArgsFormat(
-            NavRoute.GameSettings.id,
-            NavRoute.GameSettings.showDetails
-        ),
-        arguments = listOf(
-            navArgument(NavRoute.GameSettings.id) {
-                type = NavType.IntType
-            },
-            navArgument(NavRoute.GameSettings.showDetails) {
-                type = NavType.BoolType
-            }
-        )
-    ) { navBackStackEntry ->
-
-        navBackStackEntry.arguments
-
-        GameSettingsScreen(scaffoldState)
+        route = NavRoute.GameSettings.path
+    ) {
+        GameSettingsScreen(scaffoldState = scaffoldState,
+            navigateToGame = { navController.navigate(NavRoute.Game.path)})
     }
+
 }
 
+
 private fun addStatisticsScreen(
-    navController: NavHostController,
     navGraphBuilder: NavGraphBuilder
 ) {
+
     navGraphBuilder.composable(
-        route = NavRoute.Statistics.withArgsFormat(NavRoute.Statistics.query),
-        arguments = listOf(
-            navArgument(NavRoute.Statistics.query) {
-                type = NavType.StringType
-                nullable = true
-            }
-        )
-    ) { navBackStackEntry ->
-        navBackStackEntry.arguments
-        StatisticsScreen { navController.popBackStack() }
+        route = NavRoute.Statistics.path
+    ) {
+        StatisticsScreen {
+//        popBackStack = { navController.popBackStack() }
+        }
     }
 }
 
 private fun addAboutScreen(
-    navController: NavHostController,
     navGraphBuilder: NavGraphBuilder
 ) {
     navGraphBuilder.composable(
-        route = NavRoute.About.withArgsFormat(NavRoute.About.query),
-        arguments = listOf(
-            navArgument(NavRoute.About.query) {
-                type = NavType.StringType
-                nullable = true
-            }
-        )
-    ) { navBackStackEntry ->
-        navBackStackEntry.arguments
-        AboutScreen { navController.popBackStack() }
+        route = NavRoute.About.path
+    ) {
+        AboutScreen {
+//        popBackStack = { navController.popBackStack() }
+        }
     }
 }

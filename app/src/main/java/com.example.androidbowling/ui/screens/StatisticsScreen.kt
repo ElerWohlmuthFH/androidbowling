@@ -15,7 +15,7 @@ import com.example.androidbowling.ui.theme.AndroidBowlingTheme
 
 @Composable
 fun StatisticsScreen(
-    popBackStack: () -> Unit,
+    popBackStack: () -> Unit
 ) {
     Column (
         modifier = Modifier.fillMaxWidth(),

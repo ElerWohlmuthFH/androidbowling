@@ -16,9 +16,9 @@ import com.example.androidbowling.ui.theme.AndroidBowlingTheme
 
 @Composable
 fun HomeScreen(
-    navigateToGameSettings: (Int, Boolean) -> Unit,
-    navigateToStatistics: (String) -> Unit,
-    navigateToAbout: (String) -> Unit,
+    navigateToGameSettings: () -> Unit,
+    navigateToStatistics: () -> Unit,
+    navigateToAbout: () -> Unit,
 ) {
 
     Column (
@@ -28,15 +28,15 @@ fun HomeScreen(
 
         DefaultButton(
             text = "New Game"
-        ) { navigateToGameSettings(7, true) }
+        ) { navigateToGameSettings() }
 
         DefaultButton(
             text = "Statistics"
-        ) { navigateToStatistics("test") }
+        ) { navigateToStatistics() }
 
         DefaultButton(
             text = "About"
-        ) { navigateToAbout("test") }
+        ) { navigateToAbout() }
 
     }
 }
@@ -50,7 +50,7 @@ private fun DefaultPreview() {
             color = MaterialTheme.colors.background
         ) {
             HomeScreen(
-                navigateToGameSettings = { _, _ -> },
+                navigateToGameSettings = {},
                 navigateToStatistics = {}
             ) {}
        }
