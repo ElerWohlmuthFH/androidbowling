@@ -5,7 +5,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import android.content.Context
 
-@Database(entities = [PlayerList::class], version = 1, exportSchema = false)
+@Database(entities = [Player::class], version = 1, exportSchema = false)
 abstract class RoomSingleton : RoomDatabase() {
     abstract fun playerListDao(): PlayerListDAO
 

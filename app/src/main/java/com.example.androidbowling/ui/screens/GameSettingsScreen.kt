@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.androidbowling.ui.common.DefaultButton
-import com.example.androidbowling.ui.rooms.PlayerList
+import com.example.androidbowling.ui.rooms.Player
 import com.example.androidbowling.ui.rooms.PlayerListViewmodelFactory
 import com.example.androidbowling.ui.rooms.PlayerListViewModel
 import kotlinx.coroutines.launch
@@ -31,7 +31,6 @@ import java.util.*
 @Composable
 fun GameSettingsScreen(
     scaffoldState: ScaffoldState,
-//    function: () -> Unit,
     navigateToGame: () -> Unit
 ) {
 
@@ -43,7 +42,7 @@ fun GameSettingsScreen(
             context.applicationContext as Application
         )
     )
-    val list: List<PlayerList> = model.playerListList.observeAsState(listOf()).value
+    val list: List<Player> = model.playerListList.observeAsState(listOf()).value
     var textState = remember { mutableStateOf("") }
     Box(
         modifier = Modifier
@@ -77,7 +76,7 @@ fun GameSettingsScreen(
 
                     onClick = {
                         model.insert(
-                            PlayerList(
+                            Player(
                                 null,
                                 UUID.randomUUID().toString(),
                                 textState.value
@@ -104,7 +103,7 @@ fun GameSettingsScreen(
                     Text(text = "Clear")
                 }
             }
-            Column() {
+            Column {
                 DefaultButton(
                     text = "Start Game",
                     onClick = navigateToGame
@@ -138,7 +137,7 @@ fun GameSettingsScreen(
                             )
 
                             Text(
-                                text = " : " + list[index].names,
+                                text = " : " + list[index].name,
                                 style = TextStyle(
                                     color = if (list[index].id!! >= 33)
                                         Color(0xFF3B7A57)
@@ -148,7 +147,7 @@ fun GameSettingsScreen(
                             )
 
                             IconButton(onClick = {
-                                list[index].names = textState.value
+                                list[index].name = textState.value
                                 model.update(list[index])
                                 scope.launch {
                                     scaffoldState.snackbarHostState

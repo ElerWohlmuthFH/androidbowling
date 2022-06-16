@@ -95,8 +95,6 @@ private fun addGameScreen(
     navGraphBuilder.composable(
         route = NavRoute.Game.path
     ) {
-        GameScreen {
-//        popBackStack = { navController.popBackStack() }
-        }
+        GameScreen()
     }
 }

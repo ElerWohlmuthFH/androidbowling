@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "todoTBL")
-class PlayerList(
+class Player(
     @PrimaryKey
     var id: Long?,
 
@@ -13,7 +13,7 @@ class PlayerList(
     var fullName: String,
 
     @ColumnInfo(name = "notes")
-    var names: String
+    var name: String
 ) {
 
 }
