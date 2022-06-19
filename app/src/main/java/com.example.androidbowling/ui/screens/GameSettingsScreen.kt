@@ -7,6 +7,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
@@ -28,6 +30,9 @@ import com.example.androidbowling.ui.rooms.Player
 import com.example.androidbowling.ui.rooms.PlayerListViewmodelFactory
 import com.example.androidbowling.ui.rooms.PlayerListViewModel
 import com.example.androidbowling.ui.theme.PrimaryGrey
+import com.example.androidbowling.ui.theme.PrimaryRed
+import com.example.androidbowling.ui.theme.SecondaryRed
+import com.example.androidbowling.ui.theme.TertiaryGrey
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -60,11 +65,12 @@ fun GameSettingsScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 4.dp),
-                shape = RoundedCornerShape(8.dp),
+                shape = RoundedCornerShape(8.dp, 8.dp, 0.dp, 0.dp),
+//                RoundedCornerShape(8.dp),
 
                 colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = Color(0xFFFFFFFF),
-                    focusedIndicatorColor = Color.Transparent, //hide the indicator
+                    backgroundColor = Color.LightGray,
+                    focusedIndicatorColor = SecondaryRed //indicator
                 ),
                 value = textState.value, onValueChange = { textState.value = it },
                 placeholder = {
@@ -73,7 +79,8 @@ fun GameSettingsScreen(
             )
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth()
             ) {
                 PlayerListButton(
                     text = "add Name",
@@ -92,6 +99,9 @@ fun GameSettingsScreen(
                             )
                         }
                     })
+
+                Spacer(modifier = Modifier.padding(20.dp))
+
                 PlayerListButton(
                     text = "clear All",
                     onClick = {
@@ -104,7 +114,10 @@ fun GameSettingsScreen(
 
                     })
             }
-            Column() {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 StartGameButton(
                     text = "Start Game",
                     onClick = navigateToGame
@@ -114,63 +127,66 @@ fun GameSettingsScreen(
 
 
             LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(2.dp)
+                verticalArrangement = Arrangement.spacedBy(2.dp),
             ) {
                 items(list.size) { index ->
-                        Row(
-                            modifier = Modifier.padding(4.dp).background(PrimaryGrey),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = "${list[index].id}",
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(start = 12.dp),
-                                color = Color.Black
-                            )
+
+                    Row(
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .background(PrimaryGrey),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "${list[index].id}",
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(start = 12.dp),
+                            color = Color.Black
+                        )
 
 //                            Text(
 //                                text = " : " + list[index].fullName.take(10),
 //                            )
 
-                            Text(
-                                text = " : " + list[index].name,
-                                style = TextStyle(
-                                    color = Color.Black
-                                ),
-                                modifier = Modifier.weight(2F)
-                            )
+                        Text(
+                            text = " : " + list[index].name,
+                            style = TextStyle(
+                                color = Color.Black
+                            ),
+                            modifier = Modifier.weight(2F)
+                        )
 
-                            IconButton(onClick = {
-                                list[index].name = textState.value
-                                model.update(list[index])
-                                scope.launch {
-                                    scaffoldState.snackbarHostState
-                                        .showSnackbar(
-                                            "Names updated id" +
-                                                    " : ${list[index].id}",
-                                        )
-                                    textState.value = ""
-                                }
-                            }) {
-                                Icon(Icons.Filled.Edit, "", tint = Color.Black)
+                        IconButton(onClick = {
+                            list[index].name = textState.value
+                            model.update(list[index])
+                            scope.launch {
+                                scaffoldState.snackbarHostState
+                                    .showSnackbar(
+                                        "Names updated id" +
+                                                " : ${list[index].id}",
+                                    )
+                                textState.value = ""
+                            }
+                        }) {
+                            Icon(Icons.Filled.Edit, "", tint = TertiaryGrey)
+                        }
+
+                        IconButton(onClick = {
+                            model.delete(list[index])
+                            scope.launch {
+                                scaffoldState.snackbarHostState
+                                    .showSnackbar(
+                                        "Notes deleted id" +
+                                                " : ${list[index].id}",
+                                    )
+                                textState.value = ""
                             }
 
-                            IconButton(onClick = {
-                                model.delete(list[index])
-                                scope.launch {
-                                    scaffoldState.snackbarHostState
-                                        .showSnackbar(
-                                            "Notes deleted id" +
-                                                    " : ${list[index].id}",
-                                        )
-                                    textState.value = ""
-                                }
-
-                            }) {
-                                Icon(Icons.Filled.Delete, "", tint = Color.Red)
-                            }
+                        }) {
+                            Icon(Icons.Filled.Clear, "", tint = Color.Red)
                         }
                     }
+                }
             }
         }
     }

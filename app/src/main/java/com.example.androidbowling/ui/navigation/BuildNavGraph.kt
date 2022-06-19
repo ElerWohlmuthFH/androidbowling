@@ -21,8 +21,8 @@ fun BuildNavGraph(navController: NavHostController) {
     ) {
         addHomeScreen(navController, this)
         addGameSettingsScreen(navController, this, scaffoldState)
-        addStatisticsScreen(this)
-        addAboutScreen(this)
+        addStatisticsScreen(navController, this)
+        addAboutScreen(navController, this)
         addGameScreen(this)
     }
 }
@@ -57,34 +57,37 @@ private fun addGameSettingsScreen(
         route = NavRoute.GameSettings.path
     ) {
         GameSettingsScreen(scaffoldState = scaffoldState,
-            navigateToGame = { navController.navigate(NavRoute.Game.path)})
+            navigateToGame = { navController.navigate(NavRoute.Game.path) })
     }
 
 }
 
 
 private fun addStatisticsScreen(
+    navController: NavHostController,
     navGraphBuilder: NavGraphBuilder
 ) {
 
     navGraphBuilder.composable(
         route = NavRoute.Statistics.path
     ) {
-        StatisticsScreen {
-//        popBackStack = { navController.popBackStack() }
-        }
+        StatisticsScreen(
+            popBackStack = { navController.popBackStack() }
+        )
     }
 }
 
 private fun addAboutScreen(
+    navController: NavHostController,
     navGraphBuilder: NavGraphBuilder
 ) {
+
     navGraphBuilder.composable(
         route = NavRoute.About.path
     ) {
-        AboutScreen {
-//        popBackStack = { navController.popBackStack() }
-        }
+        AboutScreen(
+            popBackStack = { navController.popBackStack() }
+        )
     }
 }
 

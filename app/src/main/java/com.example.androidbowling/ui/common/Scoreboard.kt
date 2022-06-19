@@ -23,7 +23,7 @@ val normalWidth = 36.5.dp
 val wideWidth = 55.dp
 
 @Composable
-fun frameIndicator(frame: String, width: Dp) {
+fun FrameIndicator(frame: String, width: Dp) {
     Text(
         text = frame, Modifier
             .background(Color.Transparent, RoundedCornerShape(percent = 0))
@@ -55,7 +55,6 @@ fun cell(): String {
 
             }
         },
-//        onValueChange = { value = it },
         decorationBox = { innerTextField ->
             Row(
                 Modifier
@@ -65,7 +64,6 @@ fun cell(): String {
                     .border(1.dp, Color.Black)
                     .background(PrimaryGrey)
             ) {
-//                Spacer(Modifier.width(8.dp))
                 innerTextField()
             }
         },
@@ -98,16 +96,16 @@ fun Player(name: String) {
     Text(text = name)
 
     Row() {
-        frameIndicator(frame = "1", normalWidth)
-        frameIndicator(frame = "2", normalWidth)
-        frameIndicator(frame = "3", normalWidth)
-        frameIndicator(frame = "4", normalWidth)
-        frameIndicator(frame = "5", normalWidth)
-        frameIndicator(frame = "6", normalWidth)
-        frameIndicator(frame = "7", normalWidth)
-        frameIndicator(frame = "8", normalWidth)
-        frameIndicator(frame = "9", normalWidth)
-        frameIndicator(frame = "10", wideWidth)
+        FrameIndicator(frame = "1", normalWidth)
+        FrameIndicator(frame = "2", normalWidth)
+        FrameIndicator(frame = "3", normalWidth)
+        FrameIndicator(frame = "4", normalWidth)
+        FrameIndicator(frame = "5", normalWidth)
+        FrameIndicator(frame = "6", normalWidth)
+        FrameIndicator(frame = "7", normalWidth)
+        FrameIndicator(frame = "8", normalWidth)
+        FrameIndicator(frame = "9", normalWidth)
+        FrameIndicator(frame = "10", wideWidth)
     }
 
 

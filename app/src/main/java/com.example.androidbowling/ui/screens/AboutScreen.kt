@@ -13,11 +13,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.androidbowling.R
 import com.example.androidbowling.ui.common.HomeScreenButton
+import com.example.androidbowling.ui.common.StartGameButton
 import com.example.androidbowling.ui.theme.AndroidBowlingTheme
 
 
@@ -26,45 +28,42 @@ import com.example.androidbowling.ui.theme.AndroidBowlingTheme
 fun AboutScreen(
     popBackStack: () -> Unit,
 ) {
-    BottomSheetScaffold(
-        sheetContent = {
-            // Sheet content
-            Text("HIER STEHT IRGENDEIN TEXT AM UNTEREN ENDE DER SEITE", fontWeight = FontWeight.W700)
 
-        }
+    Column(
+        modifier = Modifier.padding(6.dp)
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Screen content
+        Text(
+            "Rules",
+            fontSize = 40.sp,
+            fontWeight = FontWeight.Bold
+        )
 
-        Column (
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("Rules", fontSize = 40.sp)
-            Icon(Icons.Rounded.Menu, contentDescription = "Localized description")
 
-            Card() {
-            }
+        Text(
+            "A game of bowling consists of ten frames.\n" +
+                    "\nIn each frame, the bowler will have two chances to knock down as many pins as possible with their bowling ball.\n" +
+                    "\nIn games with more than one bowler, as is common, every bowler will take their frame in a predetermined order before the next frame begins.\n" +
+                    "\nIf a bowler is able to knock down all ten pins with their first ball, he is awarded a strike.\n" +
+                    "\nIf the bowler is able to knock down all 10 pins with the two balls of a frame, it is known as a spare.\n" +
+                    "\nBonus points are awarded for both of these, depending on what is scored in the next 2 balls (for a strike) or 1 ball (for a spare).\n" +
+                    "\nIf the bowler knocks down all 10 pins in the tenth frame, the bowler is allowed to throw 3 balls for that frame.\n" +
+                    "\nThis allows for a potential of 12 strikes in a single game, and a maximum score of 300 points, a perfect game.",
+            fontSize = 15.sp
+        )
 
-            Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-                Card{
-                    Image(painter = painterResource(id = R.drawable.app_image), contentDescription = null )
-                    Column(Modifier.padding(10.dp)) {
-                        Text("AndroidBowling", fontWeight = FontWeight.W700)
-                        Text("This app was made by Eler and Matthias")
-                        Text("Top", color = Color.Gray)
-                    }
-                }
+        Spacer(modifier = Modifier.height(15.dp))
 
-                HomeScreenButton(
-                    text = "Back",
-                    onClick = popBackStack
-                )
-                Divider(color = colorResource(R.color.purple_700))
-
-            }
-
-        }
+        StartGameButton(
+            text = "Back",
+            onClick = popBackStack
+        )
     }
+
+
 }
+
 
 @Preview(showBackground = true)
 @Composable
