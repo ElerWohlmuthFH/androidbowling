@@ -1,6 +1,7 @@
 package com.example.androidbowling.ui.screens
 
 import android.app.Application
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,10 +22,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.androidbowling.ui.common.DefaultButton
+import com.example.androidbowling.ui.common.StartGameButton
+import com.example.androidbowling.ui.common.PlayerListButton
 import com.example.androidbowling.ui.rooms.Player
 import com.example.androidbowling.ui.rooms.PlayerListViewmodelFactory
 import com.example.androidbowling.ui.rooms.PlayerListViewModel
+import com.example.androidbowling.ui.theme.PrimaryGrey
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -72,8 +75,8 @@ fun GameSettingsScreen(
             Row(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Button(
-
+                PlayerListButton(
+                    text = "add Name",
                     onClick = {
                         model.insert(
                             Player(
@@ -88,23 +91,21 @@ fun GameSettingsScreen(
                                 message = "Notes added",
                             )
                         }
-                    }) {
-                    Text(text = "Add Name")
-                }
-                Button(onClick = {
-                    model.clear()
-                    scope.launch {
-                        scaffoldState.snackbarHostState.showSnackbar(
-                            message = "All Names deleted",
-                        )
-                    }
+                    })
+                PlayerListButton(
+                    text = "clear All",
+                    onClick = {
+                        model.clear()
+                        scope.launch {
+                            scaffoldState.snackbarHostState.showSnackbar(
+                                message = "All Names deleted",
+                            )
+                        }
 
-                }) {
-                    Text(text = "Clear")
-                }
+                    })
             }
-            Column {
-                DefaultButton(
+            Column() {
+                StartGameButton(
                     text = "Start Game",
                     onClick = navigateToGame
                 )
@@ -116,32 +117,25 @@ fun GameSettingsScreen(
                 verticalArrangement = Arrangement.spacedBy(2.dp)
             ) {
                 items(list.size) { index ->
-                    Card(
-                        modifier = Modifier
-                            .padding(2.dp)
-                            .fillMaxWidth()
-                            .wrapContentHeight(Alignment.CenterVertically)
-                    ) {
                         Row(
-                            modifier = Modifier.padding(4.dp),
+                            modifier = Modifier.padding(4.dp).background(PrimaryGrey),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
                                 text = "${list[index].id}",
                                 fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(start = 12.dp)
+                                modifier = Modifier.padding(start = 12.dp),
+                                color = Color.Black
                             )
 
-                            Text(
-                                text = " : " + list[index].fullName.take(10),
-                            )
+//                            Text(
+//                                text = " : " + list[index].fullName.take(10),
+//                            )
 
                             Text(
                                 text = " : " + list[index].name,
                                 style = TextStyle(
-                                    color = if (list[index].id!! >= 33)
-                                        Color(0xFF3B7A57)
-                                    else Color(0xFFAB274F)
+                                    color = Color.Black
                                 ),
                                 modifier = Modifier.weight(2F)
                             )
@@ -158,7 +152,7 @@ fun GameSettingsScreen(
                                     textState.value = ""
                                 }
                             }) {
-                                Icon(Icons.Filled.Edit, "", tint = Color.Magenta)
+                                Icon(Icons.Filled.Edit, "", tint = Color.Black)
                             }
 
                             IconButton(onClick = {
@@ -177,7 +171,6 @@ fun GameSettingsScreen(
                             }
                         }
                     }
-                }
             }
         }
     }

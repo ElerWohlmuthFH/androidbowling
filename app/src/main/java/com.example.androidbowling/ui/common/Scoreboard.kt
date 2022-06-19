@@ -1,67 +1,23 @@
 package com.example.androidbowling.ui.common
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.example.androidbowling.ui.theme.PrimaryGrey
+import com.example.androidbowling.ui.theme.SecondaryGrey
 import java.util.*
-
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            MainContent()
-        }
-    }
-}
-
-@Composable
-fun MainContent() {
-    screen()
-}
-
-@Composable
-fun screen() {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text("Android Bowling", fontSize = 40.sp)
-
-        Spacer(modifier = Modifier.height(5.dp))
-
-        Text(text = "This app was made by Eler and Matthias")
-
-
-        Column(
-            modifier = Modifier
-                .weight(1f)
-                .verticalScroll(rememberScrollState())
-        ) {
-            Player(name = "Eler")
-            Player(name = "Matthias")
-        }
-    }
-
-}
 
 val normalWidth = 36.5.dp
 val wideWidth = 55.dp
@@ -71,9 +27,10 @@ fun frameIndicator(frame: String, width: Dp) {
     Text(
         text = frame, Modifier
             .background(Color.Transparent, RoundedCornerShape(percent = 0))
-            .height(20.dp)
+            .height(22.dp)
             .width(width)
-            .border(1.dp, Color.Black),
+            .border(1.dp, Color.Black)
+            .background(SecondaryGrey),
         textAlign = TextAlign.Center
     )
 }
@@ -103,8 +60,10 @@ fun cell(): String {
             Row(
                 Modifier
                     .background(Color.Transparent, RoundedCornerShape(percent = 0))
-                    .size(18.dp)
+                    .width(18.dp)
+                    .height(22.dp)
                     .border(1.dp, Color.Black)
+                    .background(PrimaryGrey)
             ) {
 //                Spacer(Modifier.width(8.dp))
                 innerTextField()
@@ -125,7 +84,8 @@ fun ScoreCell(score: Int, width: Dp) {
             .background(Color.Transparent, RoundedCornerShape(percent = 0))
             .width(width)
             .height(normalWidth)
-            .border(1.dp, Color.Black),
+            .border(1.dp, Color.Black)
+            .background(PrimaryGrey),
         textAlign = TextAlign.Center
     )
 }

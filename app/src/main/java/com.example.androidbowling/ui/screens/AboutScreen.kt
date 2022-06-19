@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -18,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.androidbowling.R
-import com.example.androidbowling.ui.common.DefaultButton
+import com.example.androidbowling.ui.common.HomeScreenButton
 import com.example.androidbowling.ui.theme.AndroidBowlingTheme
 
 
@@ -55,7 +54,7 @@ fun AboutScreen(
                     }
                 }
 
-                DefaultButton(
+                HomeScreenButton(
                     text = "Back",
                     onClick = popBackStack
                 )

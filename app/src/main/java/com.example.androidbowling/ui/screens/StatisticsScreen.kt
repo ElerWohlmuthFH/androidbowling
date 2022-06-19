@@ -7,10 +7,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.androidbowling.ui.common.DefaultButton
+import com.example.androidbowling.ui.common.HomeScreenButton
 import com.example.androidbowling.ui.theme.AndroidBowlingTheme
 
 @Composable
@@ -22,8 +23,8 @@ fun StatisticsScreen(
         horizontalAlignment = Alignment.CenterHorizontally) {
         Text("Statistics", fontSize = 40.sp)
         Spacer(modifier = Modifier.height(5.dp))
-        Text(text = "THIS IS SOME STATISTICS")
-        DefaultButton(
+        Text(text = "COMING SOON", fontWeight = FontWeight.Bold)
+        HomeScreenButton(
             text = "Back",
             onClick = popBackStack
         )
