@@ -7,9 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -30,7 +28,6 @@ import com.example.androidbowling.ui.rooms.Player
 import com.example.androidbowling.ui.rooms.PlayerListViewmodelFactory
 import com.example.androidbowling.ui.rooms.PlayerListViewModel
 import com.example.androidbowling.ui.theme.PrimaryGrey
-import com.example.androidbowling.ui.theme.PrimaryRed
 import com.example.androidbowling.ui.theme.SecondaryRed
 import com.example.androidbowling.ui.theme.TertiaryGrey
 import kotlinx.coroutines.launch
@@ -56,7 +53,6 @@ fun GameSettingsScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(12.dp),
-        //contentAlignment = Alignment.Center
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -66,15 +62,17 @@ fun GameSettingsScreen(
                     .fillMaxWidth()
                     .padding(vertical = 4.dp),
                 shape = RoundedCornerShape(8.dp, 8.dp, 0.dp, 0.dp),
-//                RoundedCornerShape(8.dp),
 
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = Color.LightGray,
-                    focusedIndicatorColor = SecondaryRed //indicator
+                    focusedIndicatorColor = SecondaryRed
                 ),
                 value = textState.value, onValueChange = { textState.value = it },
                 placeholder = {
-                    Text(text = "Enter Name")
+                    Text(
+                        text = "Enter Name",
+                        color = TertiaryGrey
+                    )
                 },
             )
 
@@ -125,7 +123,6 @@ fun GameSettingsScreen(
             }
 
 
-
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(2.dp),
             ) {
@@ -143,10 +140,6 @@ fun GameSettingsScreen(
                             modifier = Modifier.padding(start = 12.dp),
                             color = Color.Black
                         )
-
-//                            Text(
-//                                text = " : " + list[index].fullName.take(10),
-//                            )
 
                         Text(
                             text = " : " + list[index].name,

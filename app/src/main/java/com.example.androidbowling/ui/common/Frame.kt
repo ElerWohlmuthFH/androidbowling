@@ -9,7 +9,6 @@ class Frame(var previousFrame: Frame?){
     var lastFrame = previousFrame
     var firstPitch = 0
     var secondPitch = 0
-    var thirdPitch = 0
     var frameType = FrameType.OPEN
 
 }
@@ -17,7 +16,7 @@ class Frame(var previousFrame: Frame?){
 fun main(){
     var frame = Frame(null);
 
-    var test = frame.firstPitch
+    frame.firstPitch
 
     var frame2 = Frame(frame);
     println(frame2.lastFrame?.firstPitch)

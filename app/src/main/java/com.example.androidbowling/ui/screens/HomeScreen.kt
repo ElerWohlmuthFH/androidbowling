@@ -23,14 +23,19 @@ fun HomeScreen(
     navigateToAbout: () -> Unit,
 ) {
 
-    Column (
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
             .background(PrimaryRed),
-        horizontalAlignment = Alignment.CenterHorizontally) {
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
 
-        Image(painter = painterResource(id = R.drawable.bowling), contentDescription = null, Modifier.size(300.dp))
+        Image(
+            painter = painterResource(id = R.drawable.bowling),
+            contentDescription = null,
+            Modifier.size(300.dp)
+        )
 
 
         HomeScreenButton(
@@ -60,6 +65,6 @@ private fun DefaultPreview() {
                 navigateToGameSettings = {},
                 navigateToStatistics = {}
             ) {}
-       }
+        }
     }
 }
