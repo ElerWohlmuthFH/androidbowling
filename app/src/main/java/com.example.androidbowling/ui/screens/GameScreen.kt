@@ -17,9 +17,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.androidbowling.ui.common.*
 import com.example.androidbowling.ui.rooms.*
 import com.example.androidbowling.ui.theme.AndroidBowlingTheme
+import com.example.androidbowling.ui.common.Player
 
 @Composable
 fun GameScreen() {
@@ -33,7 +33,6 @@ fun GameScreen() {
 
         Text(text = "This app was made by Eler and Matthias")
 
-        Frames()
 
         //model.clear()
         val context = LocalContext.current
@@ -54,7 +53,7 @@ fun GameScreen() {
                 Player(name = player.name)
             }
         }
-        NumPad()
+
 
     }
 }
