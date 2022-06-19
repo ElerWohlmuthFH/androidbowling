@@ -36,7 +36,7 @@ fun FrameIndicator(frame: String, width: Dp) {
 }
 
 @Composable
-fun cell(): String {
+fun cell(previousCell: String): String {
 
     var value by rememberSaveable { mutableStateOf("") }
     val pattern = remember { Regex("[0-9-xX/]*") }
@@ -44,14 +44,32 @@ fun cell(): String {
 
     BasicTextField(
         value = value,
+
         onValueChange = {
             if (it.matches(pattern) && it.length <= 1) {
-                if(it == "0"){
-                    value = "-"
-                } else{
-                    value = it
-                        .uppercase(Locale.getDefault())
+
+                if (previousCell == "X"){
+                    value = ""
+                } else if (previousCell == ""){
+                    if(it == "/") {
+                        value = ""
+                    } else if (it == "0") {
+                        value = "-"
+                    } else {
+                        value = it
+                            .uppercase(Locale.getDefault())
+                    }
+                } else {
+                    if (it == "0") {
+                        value = "-"
+                    } else {
+                        value = it
+                            .uppercase(Locale.getDefault())
+                    }
+
                 }
+
+
 
             }
         },
@@ -132,27 +150,27 @@ fun Player(name: String) {
     var cell21 = ""
 
     Row() {
-        cell1 = cell()
-        cell2 = cell()
-        cell3 = cell()
-        cell4 = cell()
-        cell5 = cell()
-        cell6 = cell()
-        cell7 = cell()
-        cell8 = cell()
-        cell9 = cell()
-        cell10 = cell()
-        cell11 = cell()
-        cell12 = cell()
-        cell13 = cell()
-        cell14 = cell()
-        cell15 = cell()
-        cell16 = cell()
-        cell17 = cell()
-        cell18 = cell()
-        cell19 = cell()
-        cell20 = cell()
-        cell21 = cell()
+        cell1 = cell("")
+        cell2 = cell(cell1)
+        cell3 = cell("")
+        cell4 = cell(cell3)
+        cell5 = cell("")
+        cell6 = cell(cell5)
+        cell7 = cell("")
+        cell8 = cell(cell7)
+        cell9 = cell("")
+        cell10 = cell(cell9)
+        cell11 = cell("")
+        cell12 = cell(cell11)
+        cell13 = cell("")
+        cell14 = cell(cell13)
+        cell15 = cell("")
+        cell16 = cell(cell15)
+        cell17 = cell("")
+        cell18 = cell(cell17)
+        cell19 = cell("")
+        cell20 = cell(cell19)
+        cell21 = cell("")
     }
 
 
@@ -209,9 +227,9 @@ fun createFrame(
         frame.frameType = FrameType.STRIKE
         frame.firstPitch = 10
         frame.secondPitch = if (lastFrame) {
-            if(secondPitch == "X"){
+            if (secondPitch == "X") {
                 10
-            } else if(secondPitch.toIntOrNull() != null) {
+            } else if (secondPitch.toIntOrNull() != null) {
                 secondPitch.toInt()
             } else {
                 0
@@ -242,10 +260,10 @@ fun createFrame(
     var computedFirstPitch = frame.firstPitch
     var computedSecondPitch = frame.secondPitch
     val computedThirdPitch = if (lastFrame) {
-        if (thirdPitch != null){
-            if(thirdPitch == "X"){
+        if (thirdPitch != null) {
+            if (thirdPitch == "X") {
                 10
-            } else if(thirdPitch.toIntOrNull() != null) {
+            } else if (thirdPitch.toIntOrNull() != null) {
                 thirdPitch.toInt()
             } else {
                 0
