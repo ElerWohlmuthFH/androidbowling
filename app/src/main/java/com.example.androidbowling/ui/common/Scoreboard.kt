@@ -21,7 +21,7 @@ import com.example.androidbowling.ui.theme.SecondaryGrey
 import java.util.*
 
 val normalWidth = 36.5.dp
-val wideWidth = 55.dp
+val wideWidth = 54.75.dp
 
 @Composable
 fun FrameIndicator(frame: String, width: Dp) {
@@ -91,7 +91,7 @@ fun cell(previousCell: String, isSecondPitch: Boolean): String {
             Row(
                 Modifier
                     .background(Color.Transparent, RoundedCornerShape(percent = 0))
-                    .width(18.dp)
+                    .width(18.25.dp)
                     .height(22.dp)
                     .border(1.dp, Color.Black)
                     .background(PrimaryGrey)
