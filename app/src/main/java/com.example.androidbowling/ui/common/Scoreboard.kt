@@ -57,31 +57,6 @@ fun cell(previousCell: String, isSecondPitch: Boolean): String {
                     } else if (it == "0") {
                         "-"
                     }
-//                    else if (previousCell == "1"
-//                        || previousCell == "2"
-//                        || previousCell == "3"
-//                        || previousCell == "4"
-//                        || previousCell == "5"
-//                        || previousCell == "6"
-//                        || previousCell == "7"
-//                        || previousCell == "8"
-//                        || previousCell == "9"
-//                        && it == "1"
-//                        || it == "2"
-//                        || it == "3"
-//                        || it == "4"
-//                        || it == "5"
-//                        || it == "6"
-//                        || it == "7"
-//                        || it == "8"
-//                        || it == "9"
-//                        && previousCell.toInt() + it.toInt() >= 10
-//                        && isSecondPitch
-//                    ) {
-//
-//
-//                        "/"
-//                    }
                     else {
                         it
                             .uppercase(Locale.getDefault())
@@ -108,14 +83,8 @@ fun cell(previousCell: String, isSecondPitch: Boolean): String {
                             value = it
                                 .uppercase(Locale.getDefault())
                         }
-
-
-
                     }
-
                 }
-
-
             }
         },
         decorationBox = { innerTextField ->
