@@ -1,5 +1,6 @@
 package com.example.androidbowling.ui.common
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -11,133 +12,68 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.toUpperCase
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.androidbowling.ui.theme.PrimaryGrey
 import com.example.androidbowling.ui.theme.SecondaryGrey
 import java.util.*
 
-val normalWidth = 36.5.dp
-val wideWidth = 54.75.dp
+const val doubleWidth = .095238095238f
+const val normalWidth = doubleWidth / 2
+const val tripleWidth = doubleWidth * 1.5f
+
+const val scoreCellRatioNormal = 1f
+const val scoreCellRatioWide = 1.50f
+const val frameIndicatorRatioNormal = 2f
+const val frameIndicatorRatioWide = 3f
+
+const val inputCellRatio = 1f
+val defaultBorder = 0.5.dp
+var primaryFontSize = 15.sp
+var nameFontSize = 20.sp
 
 @Composable
-fun FrameIndicator(frame: String, width: Dp) {
-    Text(
-        text = frame, Modifier
-            .background(Color.Transparent, RoundedCornerShape(percent = 0))
-            .height(22.dp)
-            .width(width)
-            .border(1.dp, Color.Black)
-            .background(SecondaryGrey),
-        textAlign = TextAlign.Center
-    )
+fun OrientationController() {
+    val configuration = LocalConfiguration.current
+    when (configuration.orientation) {
+        Configuration.ORIENTATION_PORTRAIT -> {
+            primaryFontSize = 15.sp
+            nameFontSize = 20.sp
+        }
+        else -> {
+            primaryFontSize = 30.sp
+            nameFontSize = 40.sp
+        }
+    }
 }
-
-@Composable
-fun cell(previousCell: String, isSecondPitch: Boolean): String {
-
-    var value by rememberSaveable { mutableStateOf("") }
-    val pattern = remember { Regex("[0-9-xX/]*") }
-
-
-    BasicTextField(
-        value = value,
-
-        onValueChange = {
-            if (it.matches(pattern) && it.length <= 1) {
-
-                if (previousCell == "X" || it.uppercase(Locale.getDefault()) == "X" && isSecondPitch) {
-                    value = ""
-                } else if (previousCell == "") { // firstPitch
-                    value = if (it == "/") {
-                        ""
-                    } else if (it == "0") {
-                        "-"
-                    }
-                    else {
-                        it
-                            .uppercase(Locale.getDefault())
-                    }
-                } else { // secondPitch
-                    if (it == "0") {
-                        value = "-"
-                    } else {
-                        if (it.toIntOrNull() != null) {
-                            var secondNumber = it.toInt()
-                            var previousNumber = if(previousCell.toIntOrNull() != null) {
-                                previousCell.toInt()
-                            } else {
-                                0
-                            }
-                            if(secondNumber + previousNumber >= 10){
-                                value = "/"
-                            } else {
-                                value = it
-                                    .uppercase(Locale.getDefault())
-                            }
-
-                        } else {
-                            value = it
-                                .uppercase(Locale.getDefault())
-                        }
-                    }
-                }
-            }
-        },
-        decorationBox = { innerTextField ->
-            Row(
-                Modifier
-                    .background(Color.Transparent, RoundedCornerShape(percent = 0))
-                    .width(18.25.dp)
-                    .height(22.dp)
-                    .border(1.dp, Color.Black)
-                    .background(PrimaryGrey)
-            ) {
-                innerTextField()
-            }
-        },
-        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password),
-        textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center)
-    )
-
-    return value
-}
-
-@Composable
-fun ScoreCell(score: Int, width: Dp) {
-
-    Text(
-        text = score.toString(), Modifier
-            .background(Color.Transparent, RoundedCornerShape(percent = 0))
-            .width(width)
-            .height(normalWidth)
-            .border(1.dp, Color.Black)
-            .background(PrimaryGrey),
-        textAlign = TextAlign.Center
-    )
-}
-
 
 @Composable
 fun Player(name: String) {
 
+    OrientationController()
+    Text(
+        text = name,
+        fontSize = nameFontSize,
+        modifier = Modifier.padding(5.dp, 0.dp, 0.dp, 0.dp),
+        textAlign = TextAlign.Left
+    )
 
-    Text(text = name)
-
-    Row() {
-        FrameIndicator(frame = "1", normalWidth)
-        FrameIndicator(frame = "2", normalWidth)
-        FrameIndicator(frame = "3", normalWidth)
-        FrameIndicator(frame = "4", normalWidth)
-        FrameIndicator(frame = "5", normalWidth)
-        FrameIndicator(frame = "6", normalWidth)
-        FrameIndicator(frame = "7", normalWidth)
-        FrameIndicator(frame = "8", normalWidth)
-        FrameIndicator(frame = "9", normalWidth)
-        FrameIndicator(frame = "10", wideWidth)
+    Row(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        FrameIndicator(text = "1", weight = doubleWidth, frameIndicatorRatioNormal)
+        FrameIndicator(text = "2", weight = doubleWidth, frameIndicatorRatioNormal)
+        FrameIndicator(text = "3", weight = doubleWidth, frameIndicatorRatioNormal)
+        FrameIndicator(text = "4", weight = doubleWidth, frameIndicatorRatioNormal)
+        FrameIndicator(text = "5", weight = doubleWidth, frameIndicatorRatioNormal)
+        FrameIndicator(text = "6", weight = doubleWidth, frameIndicatorRatioNormal)
+        FrameIndicator(text = "7", weight = doubleWidth, frameIndicatorRatioNormal)
+        FrameIndicator(text = "8", weight = doubleWidth, frameIndicatorRatioNormal)
+        FrameIndicator(text = "9", weight = doubleWidth, frameIndicatorRatioNormal)
+        FrameIndicator(text = "10", weight = tripleWidth, frameIndicatorRatioWide)
     }
 
 
@@ -163,28 +99,30 @@ fun Player(name: String) {
     var cell20 = ""
     var cell21 = ""
 
-    Row() {
-        cell1 = cell("", false)
-        cell2 = cell(cell1, true)
-        cell3 = cell("", false)
-        cell4 = cell(cell3, true)
-        cell5 = cell("", false)
-        cell6 = cell(cell5, true)
-        cell7 = cell("", false)
-        cell8 = cell(cell7, true)
-        cell9 = cell("", false)
-        cell10 = cell(cell9, true)
-        cell11 = cell("", false)
-        cell12 = cell(cell11, true)
-        cell13 = cell("", false)
-        cell14 = cell(cell13, true)
-        cell15 = cell("", false)
-        cell16 = cell(cell15, true)
-        cell17 = cell("", false)
-        cell18 = cell(cell17, true)
-        cell19 = cell("", false)
-        cell20 = cell("", false)
-        cell21 = cell("", false)
+    Row(
+        Modifier.fillMaxWidth()
+    ) {
+        cell1 = inputCell(normalWidth, "", false)
+        cell2 = inputCell(normalWidth, cell1, true)
+        cell3 = inputCell(normalWidth, "", false)
+        cell4 = inputCell(normalWidth, cell3, true)
+        cell5 = inputCell(normalWidth, "", false)
+        cell6 = inputCell(normalWidth, cell5, true)
+        cell7 = inputCell(normalWidth, "", false)
+        cell8 = inputCell(normalWidth, cell7, true)
+        cell9 = inputCell(normalWidth, "", false)
+        cell10 = inputCell(normalWidth, cell9, true)
+        cell11 = inputCell(normalWidth, "", false)
+        cell12 = inputCell(normalWidth, cell11, true)
+        cell13 = inputCell(normalWidth, "", false)
+        cell14 = inputCell(normalWidth, cell13, true)
+        cell15 = inputCell(normalWidth, "", false)
+        cell16 = inputCell(normalWidth, cell15, true)
+        cell17 = inputCell(normalWidth, "", false)
+        cell18 = inputCell(normalWidth, cell17, true)
+        cell19 = inputCell(normalWidth, "", false)
+        cell20 = inputCell(normalWidth, "", false)
+        cell21 = inputCell(normalWidth, "", false)
     }
 
 
@@ -210,19 +148,126 @@ fun Player(name: String) {
     val sum9 = frame9.total
     val sum10 = frame10.total
 
-    Row {
-        ScoreCell(sum1, normalWidth)
-        ScoreCell(sum2, normalWidth)
-        ScoreCell(sum3, normalWidth)
-        ScoreCell(sum4, normalWidth)
-        ScoreCell(sum5, normalWidth)
-        ScoreCell(sum6, normalWidth)
-        ScoreCell(sum7, normalWidth)
-        ScoreCell(sum8, normalWidth)
-        ScoreCell(sum9, normalWidth)
-        ScoreCell(sum10, wideWidth)
+    Row(
+        Modifier.fillMaxWidth()
+    ) {
+        ScoreCell(sum1, doubleWidth, scoreCellRatioNormal)
+        ScoreCell(sum2, doubleWidth, scoreCellRatioNormal)
+        ScoreCell(sum3, doubleWidth, scoreCellRatioNormal)
+        ScoreCell(sum4, doubleWidth, scoreCellRatioNormal)
+        ScoreCell(sum5, doubleWidth, scoreCellRatioNormal)
+        ScoreCell(sum6, doubleWidth, scoreCellRatioNormal)
+        ScoreCell(sum7, doubleWidth, scoreCellRatioNormal)
+        ScoreCell(sum8, doubleWidth, scoreCellRatioNormal)
+        ScoreCell(sum9, doubleWidth, scoreCellRatioNormal)
+        ScoreCell(sum10, tripleWidth, scoreCellRatioWide)
     }
 }
+
+@Composable
+fun RowScope.FrameIndicator(
+    text: String,
+    weight: Float,
+    ratio: Float
+) {
+
+    Text(
+        text = text,
+        Modifier
+            .border(defaultBorder, Color.Black)
+            .weight(weight)
+            .aspectRatio(ratio)
+            .background(SecondaryGrey),
+        textAlign = TextAlign.Center,
+        fontSize = primaryFontSize,
+    )
+}
+
+
+@Composable
+fun RowScope.inputCell(
+    weight: Float,
+    previousCell: String,
+    isSecondPitch: Boolean
+): String {
+
+
+    var value by rememberSaveable { mutableStateOf("") }
+    val pattern = remember { Regex("[0-9-xX/]*") }
+
+
+    BasicTextField(
+        value = value,
+        onValueChange = {
+            if (it.matches(pattern) && it.length <= 1) {
+
+                if (previousCell == "X" || it.uppercase(Locale.getDefault()) == "X" && isSecondPitch) {
+                    value = ""
+                } else if (previousCell == "") { // firstPitch
+                    value = if (it == "/") {
+                        ""
+                    } else if (it == "0") {
+                        "-"
+                    } else {
+                        it.uppercase(Locale.getDefault())
+                    }
+                } else { // secondPitch
+                    if (it == "0") {
+                        value = "-"
+                    } else {
+                        if (it.toIntOrNull() != null) {
+                            var secondNumber = it.toInt()
+                            var previousNumber = if (previousCell.toIntOrNull() != null) {
+                                previousCell.toInt()
+                            } else {
+                                0
+                            }
+                            if (secondNumber + previousNumber >= 10) {
+                                value = "/"
+                            } else {
+                                value = it.uppercase(Locale.getDefault())
+                            }
+                        } else {
+                            value = it.uppercase(Locale.getDefault())
+                        }
+                    }
+                }
+            }
+        },
+        modifier = Modifier
+            .background(Color.Transparent, RoundedCornerShape(percent = 0))
+            .weight(weight)
+            .border(defaultBorder, Color.Black)
+            .background(PrimaryGrey)
+            .aspectRatio(inputCellRatio),
+        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password),
+        textStyle = LocalTextStyle.current.copy(
+            textAlign = TextAlign.Center,
+            fontSize = primaryFontSize
+        )
+    )
+    return value
+}
+
+
+@Composable
+fun RowScope.ScoreCell(
+    score: Int,
+    weight: Float,
+    ratio: Float
+) {
+    Text(
+        text = score.toString(),
+        Modifier
+            .border(defaultBorder, Color.Black)
+            .weight(weight)
+            .aspectRatio(ratio)
+            .background(PrimaryGrey),
+        textAlign = TextAlign.Center,
+        fontSize = primaryFontSize
+    )
+}
+
 
 fun createFrame(previousFrame: Frame?, firstPitch: String, secondPitch: String): Frame {
     return createFrame(previousFrame, firstPitch, secondPitch, null, false)
