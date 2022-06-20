@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.androidbowling.ui.theme.PrimaryGrey
@@ -36,7 +37,7 @@ fun FrameIndicator(frame: String, width: Dp) {
 }
 
 @Composable
-fun cell(previousCell: String): String {
+fun cell(previousCell: String, isSecondPitch: Boolean): String {
 
     var value by rememberSaveable { mutableStateOf("") }
     val pattern = remember { Regex("[0-9-xX/]*") }
@@ -48,15 +49,15 @@ fun cell(previousCell: String): String {
         onValueChange = {
             if (it.matches(pattern) && it.length <= 1) {
 
-                if (previousCell == "X"){
+                if (previousCell == "X" || it.uppercase(Locale.getDefault()) == "X" && isSecondPitch) {
                     value = ""
-                } else if (previousCell == ""){
-                    if(it == "/") {
-                        value = ""
+                } else if (previousCell == "") {
+                    value = if (it == "/") {
+                        ""
                     } else if (it == "0") {
-                        value = "-"
+                        "-"
                     } else {
-                        value = it
+                        it
                             .uppercase(Locale.getDefault())
                     }
                 } else {
@@ -68,7 +69,6 @@ fun cell(previousCell: String): String {
                     }
 
                 }
-
 
 
             }
@@ -150,27 +150,27 @@ fun Player(name: String) {
     var cell21 = ""
 
     Row() {
-        cell1 = cell("")
-        cell2 = cell(cell1)
-        cell3 = cell("")
-        cell4 = cell(cell3)
-        cell5 = cell("")
-        cell6 = cell(cell5)
-        cell7 = cell("")
-        cell8 = cell(cell7)
-        cell9 = cell("")
-        cell10 = cell(cell9)
-        cell11 = cell("")
-        cell12 = cell(cell11)
-        cell13 = cell("")
-        cell14 = cell(cell13)
-        cell15 = cell("")
-        cell16 = cell(cell15)
-        cell17 = cell("")
-        cell18 = cell(cell17)
-        cell19 = cell("")
-        cell20 = cell("")
-        cell21 = cell("")
+        cell1 = cell("", false)
+        cell2 = cell(cell1, true)
+        cell3 = cell("", false)
+        cell4 = cell(cell3, true)
+        cell5 = cell("", false)
+        cell6 = cell(cell5, true)
+        cell7 = cell("", false)
+        cell8 = cell(cell7, true)
+        cell9 = cell("", false)
+        cell10 = cell(cell9, true)
+        cell11 = cell("", false)
+        cell12 = cell(cell11, true)
+        cell13 = cell("", false)
+        cell14 = cell(cell13, true)
+        cell15 = cell("", false)
+        cell16 = cell(cell15, true)
+        cell17 = cell("", false)
+        cell18 = cell(cell17, true)
+        cell19 = cell("", false)
+        cell20 = cell("", false)
+        cell21 = cell("", false)
     }
 
 
