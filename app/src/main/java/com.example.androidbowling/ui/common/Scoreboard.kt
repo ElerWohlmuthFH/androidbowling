@@ -169,7 +169,7 @@ fun Player(name: String) {
         cell17 = cell("")
         cell18 = cell(cell17)
         cell19 = cell("")
-        cell20 = cell(cell19)
+        cell20 = cell("")
         cell21 = cell("")
     }
 
