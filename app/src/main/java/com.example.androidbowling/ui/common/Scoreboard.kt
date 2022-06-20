@@ -51,21 +51,66 @@ fun cell(previousCell: String, isSecondPitch: Boolean): String {
 
                 if (previousCell == "X" || it.uppercase(Locale.getDefault()) == "X" && isSecondPitch) {
                     value = ""
-                } else if (previousCell == "") {
+                } else if (previousCell == "") { // firstPitch
                     value = if (it == "/") {
                         ""
                     } else if (it == "0") {
                         "-"
-                    } else {
+                    }
+//                    else if (previousCell == "1"
+//                        || previousCell == "2"
+//                        || previousCell == "3"
+//                        || previousCell == "4"
+//                        || previousCell == "5"
+//                        || previousCell == "6"
+//                        || previousCell == "7"
+//                        || previousCell == "8"
+//                        || previousCell == "9"
+//                        && it == "1"
+//                        || it == "2"
+//                        || it == "3"
+//                        || it == "4"
+//                        || it == "5"
+//                        || it == "6"
+//                        || it == "7"
+//                        || it == "8"
+//                        || it == "9"
+//                        && previousCell.toInt() + it.toInt() >= 10
+//                        && isSecondPitch
+//                    ) {
+//
+//
+//                        "/"
+//                    }
+                    else {
                         it
                             .uppercase(Locale.getDefault())
                     }
-                } else {
+                } else { // secondPitch
                     if (it == "0") {
                         value = "-"
                     } else {
-                        value = it
-                            .uppercase(Locale.getDefault())
+                        if (it.toIntOrNull() != null) {
+                            var secondNumber = it.toInt()
+                            var previousNumber = if(previousCell.toIntOrNull() != null) {
+                                previousCell.toInt()
+                            } else {
+                                0
+                            }
+                            if(secondNumber + previousNumber >= 10){
+                                value = "/"
+                            } else {
+                                value = it
+                                    .uppercase(Locale.getDefault())
+                            }
+
+                        } else {
+                            value = it
+                                .uppercase(Locale.getDefault())
+                        }
+
+
+
                     }
 
                 }
